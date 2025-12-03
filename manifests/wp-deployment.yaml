@@ -15,7 +15,6 @@ spec:
   # hint: match the deployment's labels (app: wordpress, tier: frontend)
   ##
   selector:
-    matchLabels:
       app: wordpress
       tier: frontend
 ---
@@ -47,8 +46,9 @@ spec:
   # tier: frontend
   ##
   selector:
-    app: wordpress
-    tier: frontend
+    matchLabels:
+      app: wordpress
+      tier: frontend
   template:
     ##
     # create pod metadata labels here (match the selectorLabels)
@@ -94,17 +94,17 @@ spec:
         # mount path: /var/www/html
         ##
         volumeMounts:
-        - name: wordpress-persistent-storage
-          mountPath: /var/www/html
+          - name: wordpress-persistent-storage
+            mountPath: /var/www/html
 
       ##
       # add volumes at the pod spec level (same indentation as containers)
       # reference the PVC: wp-pv-claim
       ##
       volumes:
-      - name: wordpress-persistent-storage
-        persistentVolumeClaim:
-          claimName: wp-pv-claim
+        - name: wordpress-persistent-storage
+          persistentVolumeClaim:
+            claimName: wp-pv-claim
 
 ---
 ##

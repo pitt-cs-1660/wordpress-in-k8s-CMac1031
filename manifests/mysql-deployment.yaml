@@ -15,9 +15,8 @@ spec:
   # create service selector labels here
   # hint: should match the deployment's labels
   selector:
-    matchLabels:
-      app: wordpress
-      tier: mysql
+    app: wordpress
+    tier: mysql
   ##
 ---
 apiVersion: v1
@@ -47,8 +46,9 @@ spec:
   # tier: mysql
   ##
   selector:
-    app: wordpress
-    tier: mysql
+    matchLabels:
+      app: wordpress
+      tier: mysql
 
   template:
     ##
@@ -87,12 +87,12 @@ spec:
         - name: MYSQL_ROOT_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: wordpress-mysql-db-secret
+              name: database
               key: root-password
         - name: MYSQL_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: wordpress-mysql-db-secret
+              name: database
               key: user-password
         ports:
         - containerPort: 3306
